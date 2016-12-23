@@ -21,12 +21,14 @@
 #include <readline/readline.h>
 #include <readline/history.h>
 #include "connection.h"
+#include "../libjson/json.hh"
 
 int main(int argc, char* argv[])
 {
 	const char *prompt = "grasllonge>";
 	const std::string	add("add"),
-						print("print");
+						print("print"),
+						json("json");
 
 	//Flush the history
 	rl_clear_history();	
@@ -68,6 +70,18 @@ int main(int argc, char* argv[])
 			std::cout << "You chose the add option" << std::endl;
 		else if (tokens[0] == print)
 			std::cout << "You chose the print option" << std::endl;
+		else if (tokens[0] == json)
+		{
+			JSON::Object obj;
+			obj["commande"] = tokens[0];
+			JSON::Array a;
+			for(size_t i=1; i<tokens.size(); ++i)
+			{
+				a.push_back(tokens[i]);
+			}
+			obj["parametres"] = a;
+			std::cout << obj << std::endl;
+		}
 		else 
 			std::cout << "This option is unknown to grasllonge" << std::endl;
 	}
