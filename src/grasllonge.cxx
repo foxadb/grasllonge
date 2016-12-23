@@ -20,14 +20,19 @@
 #include <cstdlib>
 #include <readline/readline.h>
 #include <readline/history.h>
+#include "connection.h"
 
 int main(int argc, char* argv[])
 {
-	//Flush the history
-	rl_clear_history();	
 	const char *prompt = "grasllonge>";
 	const std::string	add("add"),
 						print("print");
+
+	//Flush the history
+	rl_clear_history();	
+
+	//Initialize libcurl
+	curl_global_init(CURL_GLOBAL_ALL);
 
 	while(1)
 	{
@@ -66,6 +71,9 @@ int main(int argc, char* argv[])
 		else 
 			std::cout << "This option is unknown to grasllonge" << std::endl;
 	}
+
+	//Cleaning libcurl
+	curl_global_cleanup();
 
 	return EXIT_SUCCESS;
 }

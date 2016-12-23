@@ -13,6 +13,7 @@
  * =====================================================================================
  */
 #ifndef CONNECTION_H
-#define CONNECTION_H 
+#define CONNECTION_H
+#include <curl/curl.h>
 
 #endif /* CONNECTION_H */
