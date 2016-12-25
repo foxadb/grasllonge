@@ -25,69 +25,103 @@
 
 int main(int argc, char* argv[])
 {
-	const char *prompt = "grasllonge>";
-	const std::string	add("add"),
-						print("print"),
-						json("json");
+    const char *prompt = "grasllonge > ";
+    const std::string   add("add"),
+          print("print"),
+          json("json");
 
-	//Flush the history
-	rl_clear_history();	
+    //Flush the history
+    rl_clear_history();	
 
-	//Initialize libcurl
-	curl_global_init(CURL_GLOBAL_ALL);
+    //Initialize libcurl
+    curl_global_init(CURL_GLOBAL_ALL);
 
-	while(1)
-	{
-		char* line;
-		line = readline(prompt);
+    while(1)
+    {
+        char* line;
+        line = readline(prompt);
 
-		if (line==0 || !strncmp(line, "exit", 4))
-		{
-			std::cout << "\nBye :)" << std::endl;
-			break;
-		}
+        if (line==0 || !strncmp(line, "exit", 4))
+        {
+            std::cout << "\nBye :)" << std::endl;
+            break;
+        }
 
-		add_history(line);
+        ////////////////// LIGNES DE TEST
+        
+        std::string firstlevel ("https://api.challonge.com/v1/tournaments");
+        std::string tournamenturl ("/gras8_test1");
+        std::string api_key ("?api_key=uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig");
+        std::string url;
 
-		std::istringstream iss(line);
-		std::vector<std::string> tokens;
+        if (!strncmp(line, "tournoi", 7))
+        {
+            url = firstlevel 
+                + tournamenturl
+                + ".json" + api_key;
 
-		do
-		{
-			std::string sub;
-			iss >> sub;
-			tokens.push_back(sub);
-		} while (iss);
+            std::cout << url << std::endl;
 
-		std::cout << "You idiot wrote: " << std::endl;
-		for(size_t i=0; i<tokens.size(); ++i)
-		{
-			std::cout << tokens[i] << ' ';
-		}
-		std::cout << std::endl;
+            getRequest(url);
+        }
 
-		if (tokens[0] == add)
-			std::cout << "You chose the add option" << std::endl;
-		else if (tokens[0] == print)
-			std::cout << "You chose the print option" << std::endl;
-		else if (tokens[0] == json)
-		{
-			JSON::Object obj;
-			obj["commande"] = tokens[0];
-			JSON::Array a;
-			for(size_t i=1; i<tokens.size(); ++i)
-			{
-				a.push_back(tokens[i]);
-			}
-			obj["parametres"] = a;
-			std::cout << obj << std::endl;
-		}
-		else 
-			std::cout << "This option is unknown to grasllonge" << std::endl;
-	}
+        if (!strncmp(line, "changename", 10))
+        {
+            const char *filename = "putparam.txt";
+            
+            url = firstlevel 
+                + tournamenturl
+                + ".json" + api_key;
 
-	//Cleaning libcurl
-	curl_global_cleanup();
+            std::cout << url << std::endl;
+            
+            putRequest(filename, url);
+        }
 
-	return EXIT_SUCCESS;
+
+        //////////////// FIN DES LIGNES DE TEST
+
+        add_history(line);
+
+        std::istringstream iss(line);
+        std::vector<std::string> tokens;
+
+        do
+        {
+            std::string sub;
+            iss >> sub;
+            tokens.push_back(sub);
+        } while (iss);
+
+        std::cout << "You idiot wrote: " << std::endl;
+        for(size_t i=0; i<tokens.size(); ++i)
+        {
+            std::cout << tokens[i] << ' ';
+        }
+        std::cout << std::endl;
+
+        if (tokens[0] == add)
+            std::cout << "You chose the add option" << std::endl;
+        else if (tokens[0] == print)
+            std::cout << "You chose the print option" << std::endl;
+        else if (tokens[0] == json)
+        {
+            JSON::Object obj;
+            obj["commande"] = tokens[0];
+            JSON::Array a;
+            for(size_t i=1; i<tokens.size(); ++i)
+            {
+                a.push_back(tokens[i]);
+            }
+            obj["parametres"] = a;
+            std::cout << obj << std::endl;
+        }
+        else 
+            std::cout << "This option is unknown to grasllonge" << std::endl;
+    }
+
+    //Cleaning libcurl
+    curl_global_cleanup();
+
+    return EXIT_SUCCESS;
 }

@@ -8,35 +8,40 @@ int main(int argc, char** argv)
 {
     // Load JSON file
     
-    Value v = parse_file("tests/comp.json");    
-    cerr << v << endl;
-    cerr << "---" << endl;
+    printf("Parsing :\n");
+    Value v = parse_file("../tests/comp.json");    
+    //cout << v << endl;
+    cout << "---" << endl << endl;
     
     // Build object programmatically
     Object obj;
     
-    obj["foo"] = true;
-    obj["bar"] = 3LL;
-    obj["bar"] = 3L;
-    obj["bar"] = 3;
+    obj["salut"] = true;
+    obj["je vaux 4"] = 12;
+    obj["je vaux 4"] = 4;
     
     Object o;
-    o["failure"] = true;
-    o["success"] = "no way";
+    o["bite"] = true;
+    o["faux"] = false;
+    o["succes"] = "OUI";
     
-    obj["baz"] = o;
+    obj["matthieu"] = o;
     
     Array a;
     a.push_back(true);
-    a.push_back("asia");
-    a.push_back("europa");
-    a.push_back(55LL);
-    a.push_back(3.12L);
-    a.push_back(3.12);
+    a.push_back("rondoudou");
+    a.push_back(64);
+    a.push_back(3.14);
+    a.push_back(3.14);
         
-    obj["beer"] = a;
+    obj["biere"] = a;
 
-    cerr << obj << endl;
+    printf("Valeur de matthieu -> bite : %s\n", obj["matthieu"]["bite"] ? "true" : "false");
+    printf("Valeur de matthieu -> faux : %s\n", obj["matthieu"]["bonjour"] ? "true" : "false");
+    printf("Valeur de je vaux 4 : %i\n\n", obj["je vaux 4"]);
+    printf("Valeur de matthieu -> succes : %s\n\n", obj["matthieu"]["succes"]);
+
+    cout << obj << endl;
     
-    return 0;
+    return EXIT_SUCCESS;
 }
