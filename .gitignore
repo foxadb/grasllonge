@@ -1,6 +1,9 @@
 # Build directory
 build
 
+# Swap file
+*.swp
+
 #Prerequisites
 *.d
 

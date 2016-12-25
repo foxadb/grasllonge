@@ -23,4 +23,8 @@ using namespace std;
 
 void getTournament(string user, string pass, string name);
 
+void changeTournamentName(string user, string pass, string tname, string newName);
+
+void addPlayer(string user, string pass, string tname, string pname);
+
 #endif /* CONNECTION_H */

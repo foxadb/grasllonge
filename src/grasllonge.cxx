@@ -49,9 +49,20 @@ int main(int argc, char* argv[])
 
         ////////////////// LIGNES DE TEST
 
-        if (!strncmp(line, "tournoi", 7))
+        std::string login = "dothraki";
+        std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
+        std::string tournoi = "gras8_test1";
+
+        if (!strncmp(line, "test", 4))
         {
-            getTournament("dothraki", "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig", "gras8_test1");
+            std::string newName = "BITEEEEE";
+            changeTournamentName(login, apikey, tournoi, newName);
+
+            std::string joueur = "Matthieu";
+            std::cout << "Ajout de " + joueur << std::endl;
+            addPlayer(login, apikey, tournoi, joueur);
+
+            getTournament(login, apikey, tournoi); 
         }
 
 
