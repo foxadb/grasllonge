@@ -15,37 +15,33 @@
 #include "connection.h"
 
 using namespace std;
+using namespace cpr;
 using namespace JSON;
 
 static const string challongeUrl = "https://api.challonge.com/v1/tournaments";
 
-void getTournament(string user, string pass, string name)
+string getTournament(string user, string pass, string name)
 {
     string url = challongeUrl + "/" + name + ".json"; 
     
-    auto res = cpr::Get(
-            cpr::Url{url},
-            cpr::Authentication{user, pass}
+    auto res = Get(
+            Url{url},
+            Authentication{user, pass}
             );
 
     /*  JSON text string */
-    res.text;
-
-    cout << res.text << endl;
+    return res.text;
 }
 
 void changeTournamentName(string user, string pass, string tname, string newName)
 {
     string url = challongeUrl + "/" + tname + ".json"; 
 
-    auto res = cpr::Put(
-            cpr::Url{url},
-            cpr::Authentication{user, pass},
-            cpr::Payload{{"tournament[name]", newName}}
+    auto res = Put(
+            Url{url},
+            Authentication{user, pass},
+            Payload{{"tournament[name]", newName}}
             );
-
-    /*  JSON text string */
-    res.text;
 }
 
 void addPlayer(string user, string pass, string tname, string pname)
@@ -57,7 +53,4 @@ void addPlayer(string user, string pass, string tname, string pname)
             cpr::Authentication{user, pass},
             cpr::Payload{{"participant[name]", pname}}
             );
-
-    /*  JSON text string */
-    res.text;
 }

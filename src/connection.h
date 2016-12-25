@@ -21,7 +21,7 @@
 
 using namespace std;
 
-void getTournament(string user, string pass, string name);
+string getTournament(string user, string pass, string name);
 
 void changeTournamentName(string user, string pass, string tname, string newName);
 

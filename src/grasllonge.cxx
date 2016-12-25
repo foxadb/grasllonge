@@ -62,7 +62,7 @@ int main(int argc, char* argv[])
             std::cout << "Ajout de " + joueur << std::endl;
             addPlayer(login, apikey, tournoi, joueur);
 
-            getTournament(login, apikey, tournoi); 
+            std::cout << getTournament(login, apikey, tournoi) << std::endl;
         }
 
 
