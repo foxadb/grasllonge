@@ -48,34 +48,10 @@ int main(int argc, char* argv[])
         }
 
         ////////////////// LIGNES DE TEST
-        
-        std::string firstlevel ("https://api.challonge.com/v1/tournaments");
-        std::string tournamenturl ("/gras8_test1");
-        std::string api_key ("?api_key=uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig");
-        std::string url;
 
         if (!strncmp(line, "tournoi", 7))
         {
-            url = firstlevel 
-                + tournamenturl
-                + ".json" + api_key;
-
-            std::cout << url << std::endl;
-
-            getRequest(url);
-        }
-
-        if (!strncmp(line, "changename", 10))
-        {
-            const char *filename = "putparam.txt";
-            
-            url = firstlevel 
-                + tournamenturl
-                + ".json" + api_key;
-
-            std::cout << url << std::endl;
-            
-            putRequest(filename, url);
+            getTournament("dothraki", "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig", "gras8_test1");
         }
 
 
