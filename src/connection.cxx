@@ -23,7 +23,7 @@ static const string challongeUrl = "https://api.challonge.com/v1/tournaments";
 string getTournament(string user, string pass, string name)
 {
     string url = challongeUrl + "/" + name + ".json"; 
-    
+
     auto res = Get(
             Url{url},
             Authentication{user, pass}
@@ -48,9 +48,36 @@ void addPlayer(string user, string pass, string tname, string pname)
 {
     string url = challongeUrl + "/" + tname + "/participants.json"; 
 
-    auto res = cpr::Post(
-            cpr::Url{url},
-            cpr::Authentication{user, pass},
-            cpr::Payload{{"participant[name]", pname}}
+    auto res = Post(
+            Url{url},
+            Authentication{user, pass},
+            Payload{{"participant[name]", pname}}
             );
+}
+
+void addPlayerList(string user, string pass, string tname, char *file)
+{
+    FILE *fp = fopen(file, "r");
+    char *pname;
+
+    if (fp == NULL)
+    {
+        perror ("Error opening file");
+    }
+    else
+    {
+        while (1)
+        {
+            if (fgets(pname, 60, fp) == NULL)
+            {
+                /*  end of file */
+                break;
+            }
+            /*  add the player to challonge */
+            addPlayer(user, pass, tname, pname);
+        }
+    }
+    
+    /*  close the file */
+        fclose(fp);
 }

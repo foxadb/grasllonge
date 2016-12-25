@@ -51,18 +51,21 @@ int main(int argc, char* argv[])
 
         std::string login = "dothraki";
         std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
-        std::string tournoi = "gras8_test1";
+        std::string tournament = "gras8_test1";
 
         if (!strncmp(line, "test", 4))
         {
             std::string newName = "BITEEEEE";
-            changeTournamentName(login, apikey, tournoi, newName);
+            changeTournamentName(login, apikey, tournament, newName);
 
             std::string joueur = "Matthieu";
             std::cout << "Ajout de " + joueur << std::endl;
-            addPlayer(login, apikey, tournoi, joueur);
+            addPlayer(login, apikey, tournament, joueur);
 
-            std::cout << getTournament(login, apikey, tournoi) << std::endl;
+            char *file = "liste_joueurs.txt";
+            addPlayerList(login, apikey, tournament, file);
+
+            std::cout << getTournament(login, apikey, tournament) << std::endl;
         }
 
 

@@ -27,4 +27,6 @@ void changeTournamentName(string user, string pass, string tname, string newName
 
 void addPlayer(string user, string pass, string tname, string pname);
 
+void addPlayerList(string user, string pass, string tname, char *file);
+
 #endif /* CONNECTION_H */
