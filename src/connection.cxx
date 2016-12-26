@@ -3,7 +3,7 @@
  *
  *       Filename:  connection.cxx
  *
- *    Description:  Fichier contenant les fichiers d'interaction avec Challonge
+ *    Description:  Interaction functions with Challonge servers
  *
  *        Version:  1.0
  *       Revision:  none
@@ -20,9 +20,9 @@ using namespace JSON;
 
 static const string challongeUrl = "https://api.challonge.com/v1/tournaments";
 
-string getTournament(string user, string pass, string name)
+string getTournament(string user, string pass, string tname)
 {
-    string url = challongeUrl + "/" + name + ".json"; 
+    string url = challongeUrl + "/" + tname + ".json"; 
 
     auto res = Get(
             Url{url},
