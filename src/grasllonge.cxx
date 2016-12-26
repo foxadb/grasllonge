@@ -3,7 +3,7 @@
  *
  *       Filename:  grasllonge.cxx
  *
- *    Description:	Fichier principal contenant la boucle principale du programme
+ *    Description:	Main file containing the main while loop
  *
  *        Version:  1.0
  *       Revision:  none
