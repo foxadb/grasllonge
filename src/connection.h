@@ -18,6 +18,7 @@
 #include <curl/curl.h>
 #include <cpr/cpr.h>
 #include "../libjson/json.hh"
+#include <vector>
 
 using namespace std;
 

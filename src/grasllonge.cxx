@@ -16,7 +16,6 @@
 #include <sstream>
 #include <algorithm>
 #include <iterator>
-#include <vector>
 #include <cstdlib>
 #include <readline/readline.h>
 #include <readline/history.h>
@@ -62,8 +61,7 @@ int main(int argc, char* argv[])
             std::cout << "Ajout de " + joueur << std::endl;
             addPlayer(login, apikey, tournament, joueur);
 
-            char *file = "liste_joueurs.txt";
-            addPlayerList(login, apikey, tournament, file);
+            //addPlayerList(login, apikey, tournament, file);
 
             std::cout << getTournament(login, apikey, tournament) << std::endl;
         }

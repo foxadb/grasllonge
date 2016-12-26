@@ -55,29 +55,8 @@ void addPlayer(string user, string pass, string tname, string pname)
             );
 }
 
-void addPlayerList(string user, string pass, string tname, char *file)
+void addPlayerList(string user, string pass, string tname, std::vector<string> list)
 {
-    FILE *fp = fopen(file, "r");
-    char *pname;
-
-    if (fp == NULL)
-    {
-        perror ("Error opening file");
-    }
-    else
-    {
-        while (1)
-        {
-            if (fgets(pname, 60, fp) == NULL)
-            {
-                /*  end of file */
-                break;
-            }
-            /*  add the player to challonge */
-            addPlayer(user, pass, tname, pname);
-        }
-    }
-    
-    /*  close the file */
-        fclose(fp);
+	for(size_t i=0; i<list.size(); ++i
+		addPlayer(user, pass, tname, list[i]);
 }
