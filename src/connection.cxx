@@ -57,6 +57,6 @@ void addPlayer(string user, string pass, string tname, string pname)
 
 void addPlayerList(string user, string pass, string tname, std::vector<string> list)
 {
-	for(size_t i=0; i<list.size(); ++i
+	for(size_t i=0; i<list.size(); ++i)
 		addPlayer(user, pass, tname, list[i]);
 }
