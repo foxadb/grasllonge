@@ -60,6 +60,6 @@ void addPlayer(string user, string pass, string tname, string pname);
  * @param tname tournament's name (custom url)
  * @param file file containing the players' list
  */
-void addPlayerList(string user, string pass, string tname, char *file);
+void addPlayerList(string user, string pass, string tname, vector<string> list);
 
 #endif /* CONNECTION_H */

@@ -14,6 +14,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <fstream>
 #include <algorithm>
 #include <iterator>
 #include <cstdlib>
@@ -52,7 +53,7 @@ int main(int argc, char* argv[])
         std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
         std::string tournament = "gras8_test1";
 
-        if (!strncmp(line, "test", 4))
+        if (!strncmp(line, "test1", 5))
         {
             std::string newName = "BITEEEEE";
             changeTournamentName(login, apikey, tournament, newName);
@@ -61,9 +62,28 @@ int main(int argc, char* argv[])
             std::cout << "Ajout de " + joueur << std::endl;
             addPlayer(login, apikey, tournament, joueur);
 
-            //addPlayerList(login, apikey, tournament, file);
-
             std::cout << getTournament(login, apikey, tournament) << std::endl;
+        }
+
+        if (!strncmp(line, "test2", 5))
+        {
+            std::cout << "Changement de nom" << std::endl;            
+            std::string newName = "Nouveau Nom";
+            changeTournamentName(login, apikey, tournament, newName);
+            
+            std::cout << "Lecture de la liste des joueurs" << std::endl;
+            std::vector<std::string> liste;
+            std::string line;
+            std::ifstream infile("liste_joueurs.txt");
+            if (infile)
+            {
+                while (getline(infile, line))
+                {
+                    liste.push_back(line);
+                }
+            }
+            std::cout << "Ajout des joueurs" << std::endl;            
+            addPlayerList(login, apikey, tournament, liste);
         }
 
 
