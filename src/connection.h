@@ -21,6 +21,8 @@
 
 using namespace std;
 
+void create_liste_participant(string user, string pass, string tname);
+
 /**
  * @brief Get the tournament's infos
  *

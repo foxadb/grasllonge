@@ -20,6 +20,23 @@ using namespace JSON;
 
 static const string challongeUrl = "https://api.challonge.com/v1/tournaments";
 
+static Object liste_participant;
+
+void create_liste_participant(string user, string pass, string tname)
+{
+	string url = challongeUrl + "/" + tname + "/participants.json";
+	
+	auto res = Get(Url{url}, Authentication{user, pass});
+
+	Array temp = Array(parse_string(res.text));
+	std::cout << "PENIS:\n" << temp << std::endl;
+
+	for(auto it = temp.begin(); it != temp.end(); ++it)
+	{
+		liste_participant[std::string((*it)["participant"]["display_name"])] = (*it)["participant"]["id"];
+	}
+}
+
 string getTournament(string user, string pass, string tname)
 {
     string url = challongeUrl + "/" + tname + ".json"; 

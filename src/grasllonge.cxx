@@ -26,9 +26,12 @@
 int main(int argc, char* argv[])
 {
     const char *prompt = "grasllonge > ";
-    const std::string   add("add"),
-          print("print"),
-          json("json");
+
+	//Configuration
+	const std::string login = "dothraki";
+	const std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
+	const std::string tournament = "gras8_test1";
+	
 
     //Flush the history
     rl_clear_history();	
@@ -49,9 +52,6 @@ int main(int argc, char* argv[])
 
         ////////////////// LIGNES DE TEST
 
-        std::string login = "dothraki";
-        std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
-        std::string tournament = "gras8_test1";
 
         if (!strncmp(line, "test1", 5))
         {
@@ -86,6 +86,11 @@ int main(int argc, char* argv[])
             addPlayerList(login, apikey, tournament, liste);
         }
 
+		if (!strncmp(line, "test3", 5))
+		{
+			create_liste_participant(login, apikey, tournament);
+		}
+
 
         //////////////// FIN DES LIGNES DE TEST
 
@@ -107,25 +112,6 @@ int main(int argc, char* argv[])
             std::cout << tokens[i] << ' ';
         }
         std::cout << std::endl;
-
-        if (tokens[0] == add)
-            std::cout << "You chose the add option" << std::endl;
-        else if (tokens[0] == print)
-            std::cout << "You chose the print option" << std::endl;
-        else if (tokens[0] == json)
-        {
-            JSON::Object obj;
-            obj["commande"] = tokens[0];
-            JSON::Array a;
-            for(size_t i=1; i<tokens.size(); ++i)
-            {
-                a.push_back(tokens[i]);
-            }
-            obj["parametres"] = a;
-            std::cout << obj << std::endl;
-        }
-        else 
-            std::cout << "This option is unknown to grasllonge" << std::endl;
     }
 
     //Cleaning libcurl
