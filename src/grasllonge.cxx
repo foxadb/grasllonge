@@ -89,9 +89,14 @@ int main(int argc, char* argv[])
 
 		if (!strncmp(line, "test3", 5))
 		{
-			create_liste_participant(tournament);
+			create_liste_participants(tournament);
 		}
 
+        if (!strncmp(line, "test4", 5))
+        {
+            deletePlayer(tournament, "Camus");
+            resetPlayers(tournament);
+        }
 
         //////////////// FIN DES LIGNES DE TEST
 

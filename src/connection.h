@@ -23,7 +23,7 @@ using namespace std;
 
 void initialize_param_values(string suser, string spass);
 
-void create_liste_participant(string tname);
+void create_liste_participants(string tname);
 
 /**
  * @brief Get the tournament's infos
@@ -65,5 +65,9 @@ void addPlayer(string tname, string pname);
  * @param file file containing the players' list
  */
 void addPlayerList(string tname, vector<string> list);
+
+void deletePlayer(string tname, string pname);
+
+void resetPlayers(string tname);
 
 #endif /* CONNECTION_H */
