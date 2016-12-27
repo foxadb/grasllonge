@@ -32,6 +32,7 @@ int main(int argc, char* argv[])
 	const std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
 	const std::string tournament = "gras8_test1";
 	
+	initialize_param_values(login, apikey);
 
     //Flush the history
     rl_clear_history();	
@@ -56,20 +57,20 @@ int main(int argc, char* argv[])
         if (!strncmp(line, "test1", 5))
         {
             std::string newName = "BITEEEEE";
-            changeTournamentName(login, apikey, tournament, newName);
+            changeTournamentName(tournament, newName);
 
             std::string joueur = "Matthieu";
             std::cout << "Ajout de " + joueur << std::endl;
-            addPlayer(login, apikey, tournament, joueur);
+            addPlayer(tournament, joueur);
 
-            std::cout << getTournament(login, apikey, tournament) << std::endl;
+            std::cout << getTournament(tournament) << std::endl;
         }
 
         if (!strncmp(line, "test2", 5))
         {
             std::cout << "Changement de nom" << std::endl;            
             std::string newName = "Nouveau Nom";
-            changeTournamentName(login, apikey, tournament, newName);
+            changeTournamentName(tournament, newName);
             
             std::cout << "Lecture de la liste des joueurs" << std::endl;
             std::vector<std::string> liste;
@@ -83,12 +84,12 @@ int main(int argc, char* argv[])
                 }
             }
             std::cout << "Ajout des joueurs" << std::endl;            
-            addPlayerList(login, apikey, tournament, liste);
+            addPlayerList(tournament, liste);
         }
 
 		if (!strncmp(line, "test3", 5))
 		{
-			create_liste_participant(login, apikey, tournament);
+			create_liste_participant(tournament);
 		}
 
 

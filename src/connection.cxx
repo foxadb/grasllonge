@@ -22,7 +22,17 @@ static const string challongeUrl = "https://api.challonge.com/v1/tournaments";
 
 static Object liste_participant;
 
-void create_liste_participant(string user, string pass, string tname)
+static string user;
+static string pass;
+static string tname;
+
+void initialize_param_values(string suser, string spass)
+{
+	user = suser;
+	pass = spass;
+}
+
+void create_liste_participant(string tname)
 {
 	string url = challongeUrl + "/" + tname + "/participants.json";
 	
@@ -37,7 +47,7 @@ void create_liste_participant(string user, string pass, string tname)
 	}
 }
 
-string getTournament(string user, string pass, string tname)
+string getTournament(string tname)
 {
     string url = challongeUrl + "/" + tname + ".json"; 
 
@@ -50,7 +60,7 @@ string getTournament(string user, string pass, string tname)
     return res.text;
 }
 
-void changeTournamentName(string user, string pass, string tname, string newName)
+void changeTournamentName(string tname, string newName)
 {
     string url = challongeUrl + "/" + tname + ".json"; 
 
@@ -61,7 +71,7 @@ void changeTournamentName(string user, string pass, string tname, string newName
             );
 }
 
-void addPlayer(string user, string pass, string tname, string pname)
+void addPlayer(string tname, string pname)
 {
     string url = challongeUrl + "/" + tname + "/participants.json"; 
 
@@ -72,8 +82,8 @@ void addPlayer(string user, string pass, string tname, string pname)
             );
 }
 
-void addPlayerList(string user, string pass, string tname, vector<string> list)
+void addPlayerList(string tname, vector<string> list)
 {
 	for(size_t i=0; i<list.size(); ++i)
-		addPlayer(user, pass, tname, list[i]);
+		addPlayer(tname, list[i]);
 }

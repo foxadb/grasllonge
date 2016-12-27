@@ -21,7 +21,9 @@
 
 using namespace std;
 
-void create_liste_participant(string user, string pass, string tname);
+void initialize_param_values(string suser, string spass);
+
+void create_liste_participant(string tname);
 
 /**
  * @brief Get the tournament's infos
@@ -32,7 +34,7 @@ void create_liste_participant(string user, string pass, string tname);
  *
  * @return tournament's infos in JSON format
  */
-string getTournament(string user, string pass, string tname);
+string getTournament(string tname);
 
 /**
  * @brief Change the tournament's name (not url)
@@ -42,7 +44,7 @@ string getTournament(string user, string pass, string tname);
  * @param tname tournament's name (custom url)
  * @param newName new tournament's name
  */
-void changeTournamentName(string user, string pass, string tname, string newName);
+void changeTournamentName(string tname, string newName);
 
 /**
  * @brief Add a player into the tournament
@@ -52,7 +54,7 @@ void changeTournamentName(string user, string pass, string tname, string newName
  * @param tname tournament's name (custom url)
  * @param pname player's name to add
  */
-void addPlayer(string user, string pass, string tname, string pname);
+void addPlayer(string tname, string pname);
 
 /**
  * @brief Add a list of players
@@ -62,6 +64,6 @@ void addPlayer(string user, string pass, string tname, string pname);
  * @param tname tournament's name (custom url)
  * @param file file containing the players' list
  */
-void addPlayerList(string user, string pass, string tname, vector<string> list);
+void addPlayerList(string tname, vector<string> list);
 
 #endif /* CONNECTION_H */
