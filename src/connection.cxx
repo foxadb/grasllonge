@@ -48,6 +48,12 @@ void create_liste_participants(string tname)
 	{
 		liste_participants[std::string((*it)["participant"]["display_name"])] = (*it)["participant"]["id"];
 	}
+
+	//Print liste_participants
+	for(auto it = liste_participants.begin(); it != liste_participants.end(); ++it)
+	{
+		std::cout << "Le nom " << (*it).first << " a l'ID " << (*it).second << std::endl;
+	}
 }
 
 string getTournament(string tname)
@@ -93,22 +99,16 @@ void addPlayerList(string tname, vector<string> list)
 
 void deletePlayer(string tname, string pname)
 {
-    string url = challongeUrl + "/" + tname + "/participants/"
-        + string(liste_participants[pname]) + ".json";
+	long id = (long long int) (liste_participants[pname]);
+    string url = challongeUrl + "/" + tname + "/participants/" + to_string(id) + ".json";
 
-    cout << liste_participants[pname] << endl;
-    cout << string(liste_participants[pname]) << endl;   
-    cout << url << endl;
-
-    auto res = Delete(Url{url});
+    auto res = Delete(Url{url}, Authentication{user, pass});
 }
 
 void resetPlayers(string tname)
 {
-    auto it = liste_participants.begin();
-    while (it != liste_participants.end())
+    for(auto it = liste_participants.begin(); it != liste_participants.end(); ++it)
     {
         deletePlayer(tname, (*it).first);
-        it++;
     }
 }
