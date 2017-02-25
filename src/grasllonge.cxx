@@ -12,6 +12,9 @@
  * =====================================================================================
  */
 
+#include "connection.h"
+#include "test.h"
+
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -20,7 +23,7 @@
 #include <cstdlib>
 #include <readline/readline.h>
 #include <readline/history.h>
-#include "connection.h"
+
 #include "../libjson/json.hh"
 
 int main(int argc, char* argv[])
@@ -52,52 +55,13 @@ int main(int argc, char* argv[])
         }
 
         ////////////////// LIGNES DE TEST
-
-
-        if (!strncmp(line, "test1", 5))
+        if (!strncmp(line, "test", 4))
         {
-            std::string newName = "BITEEEEE";
-            changeTournamentName(tournament, newName);
-
-            std::string joueur = "Matthieu";
-            std::cout << "Ajout de " + joueur << std::endl;
-            addPlayer(tournament, joueur);
-
-            std::cout << getTournament(tournament) << std::endl;
+        	int testNum;
+        	std::cout << "Enter the test number :" << std::endl;
+        	cin >> testNum;
+        	grasllongeTest(testNum, login, apikey, tournament);
         }
-
-        if (!strncmp(line, "test2", 5))
-        {
-            std::cout << "Changement de nom" << std::endl;            
-            std::string newName = "Nouveau Nom";
-            changeTournamentName(tournament, newName);
-            
-            std::cout << "Lecture de la liste des joueurs" << std::endl;
-            std::vector<std::string> liste;
-            std::string line;
-            std::ifstream infile("liste_joueurs.txt");
-            if (infile)
-            {
-                while (getline(infile, line))
-                {
-                    liste.push_back(line);
-                }
-            }
-            std::cout << "Ajout des joueurs" << std::endl;            
-            addPlayerList(tournament, liste);
-        }
-
-		if (!strncmp(line, "test3", 5))
-		{
-			create_liste_participants(tournament);
-		}
-
-        if (!strncmp(line, "test4", 5))
-        {
-            deletePlayer(tournament, "Camus");
-            resetPlayers(tournament);
-        }
-
         //////////////// FIN DES LIGNES DE TEST
 
         add_history(line);
