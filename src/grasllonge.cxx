@@ -13,6 +13,7 @@
  */
 
 #include "connection.h"
+#include "terminal.h"
 #include "test.h"
 
 #include <iostream>
@@ -37,6 +38,8 @@ int main(int argc, char* argv[])
 	
 	initialize_param_values(login, apikey);
 
+	create_participants_list(tournament);
+
     //Flush the history
     rl_clear_history();	
 
@@ -45,6 +48,8 @@ int main(int argc, char* argv[])
 
     while(1)
     {
+    	rl_attempted_completion_function = function_name_completion;
+
         char* line;
         line = readline(prompt);
 
@@ -54,15 +59,17 @@ int main(int argc, char* argv[])
             break;
         }
 
-        ////////////////// LIGNES DE TEST
-        if (!strncmp(line, "test", 4))
+        ////////////////// TEST LINES
+        else if (!strncmp(line, "test", 4))
         {
         	int testNum;
-        	std::cout << "Enter the test number :" << std::endl;
+        	std::cout << "Enter the test number: ";
         	cin >> testNum;
-        	grasllongeTest(testNum, login, apikey, tournament);
+        	grasllongeTest(testNum, tournament);
         }
-        //////////////// FIN DES LIGNES DE TEST
+        //////////////// ENDING OF TEST LINES
+
+        else execute_function(line, tournament);
 
         add_history(line);
 
@@ -76,11 +83,6 @@ int main(int argc, char* argv[])
             tokens.push_back(sub);
         } while (iss);
 
-        std::cout << "You idiot wrote: " << std::endl;
-        for(size_t i=0; i<tokens.size(); ++i)
-        {
-            std::cout << tokens[i] << ' ';
-        }
         std::cout << std::endl;
     }
 

@@ -7,15 +7,14 @@
 
 #include "test.h"
 
-void grasllongeTest(int num, string login, string apikey, string tournament)
+void grasllongeTest(int num, string tournament)
 {
 	string newName;
 	string player;
 
-	vector<string> liste;
+	vector<string> list;
 	string line;
-	ifstream infile("liste_joueurs.txt");
-
+	ifstream infile("../test/players_list.txt");
 
 	switch (num)
 	{
@@ -24,35 +23,41 @@ void grasllongeTest(int num, string login, string apikey, string tournament)
 		changeTournamentName(tournament, newName);
 
 		player = "Matthieu";
-		cout << "Ajout de " + player << endl;
+		cout << "Adding " + player << endl;
 		addPlayer(tournament, player);
 		cout << getTournament(tournament) << endl;
 		break;
 
 	case 2:
-		cout << "Changement de nom" << endl;
+		cout << "Changing tournament's name" << endl;
 		newName = "Nouveau Nom";
 		changeTournamentName(tournament, newName);
 
-		cout << "Lecture de la liste des joueurs" << endl;
+		cout << "Reading players' list" << endl;
 		if (infile)
 		{
 			while (getline(infile, line))
 			{
-				liste.push_back(line);
+				list.push_back(line);
 			}
 		}
-		cout << "Ajout des joueurs" << endl;
-		addPlayerList(tournament, liste);
+		cout << "Adding players..." << endl;
+		addPlayerList(tournament, list);
+		cout << "...completed";
 		break;
 
 	case 3:
-		create_liste_participants(tournament);
+		create_participants_list(tournament);
 		break;
 
 	case 4:
+		cout << "Delete Camus" << endl;
 		deletePlayer(tournament, "Camus");
+		cout << "Reset the players' list" << endl;
 		resetPlayers(tournament);
 		break;
+
+	default:
+		cout << "Test number does not exist" << endl;
 	}
 }

@@ -14,13 +14,9 @@
 
 #include "connection.h"
 
-using namespace std;
-using namespace cpr;
-using namespace JSON;
-
 static const std::string challongeUrl = "https://api.challonge.com/v1/tournaments";
 
-static JSON::Object liste_participants;
+static JSON::Object participants_list;
 
 static std::string user;
 static std::string pass;
@@ -32,28 +28,22 @@ void initialize_param_values(string suser, string spass)
 	pass = spass;
 }
 
-void create_liste_participants(string tname)
+void create_participants_list(string tname)
 {
 	std::string url = challongeUrl + "/" + tname + "/participants.json";
 	
 	auto res = cpr::Get(
-            Url{url}, 
-            Authentication{user, pass}
+            cpr::Url{url},
+            cpr::Authentication{user, pass}
             );
 
 	JSON::Array temp = JSON::Array(parse_string(res.text));
-	std::cout << "PENIS:\n" << temp << std::endl;
 
 	for(auto it = temp.begin(); it != temp.end(); ++it)
 	{
-		liste_participants[std::string((*it)["participant"]["display_name"])] = (*it)["participant"]["id"];
+		participants_list[std::string((*it)["participant"]["display_name"])] = (*it)["participant"]["id"];
 	}
 
-	//Print liste_participants
-	for(auto it = liste_participants.begin(); it != liste_participants.end(); ++it)
-	{
-		std::cout << "Le nom " << (*it).first << " a l'ID " << (*it).second << std::endl;
-	}
 }
 
 string getTournament(string tname)
@@ -61,8 +51,8 @@ string getTournament(string tname)
     std::string url = challongeUrl + "/" + tname + ".json";
     
     auto res = cpr::Get(
-            Url{url},
-            Authentication{user, pass}
+            cpr::Url{url},
+            cpr::Authentication{user, pass}
             );
 
     /*  JSON text string */
@@ -74,9 +64,9 @@ void changeTournamentName(string tname, string newName)
     std::string url = challongeUrl + "/" + tname + ".json";
 
     auto res = cpr::Put(
-            Url{url},
-            Authentication{user, pass},
-            Payload{{"tournament[name]", newName}}
+            cpr::Url{url},
+            cpr::Authentication{user, pass},
+            cpr::Payload{{"tournament[name]", newName}}
             );
 }
 
@@ -85,9 +75,9 @@ void addPlayer(string tname, string pname)
     std::string url = challongeUrl + "/" + tname + "/participants.json";
 
     auto res = cpr::Post(
-            Url{url},
-            Authentication{user, pass},
-            Payload{{"participant[name]", pname}}
+            cpr::Url{url},
+            cpr::Authentication{user, pass},
+            cpr::Payload{{"participant[name]", pname}}
             );
 }
 
@@ -99,15 +89,15 @@ void addPlayerList(string tname, vector<string> list)
 
 void deletePlayer(string tname, string pname)
 {
-	long id = (long long int) (liste_participants[pname]);
+	long id = (long long int) (participants_list[pname]);
     std::string url = challongeUrl + "/" + tname + "/participants/" + to_string(id) + ".json";
 
-    auto res = cpr::Delete(Url{url}, Authentication{user, pass});
+    auto res = cpr::Delete(cpr::Url{url}, cpr::Authentication{user, pass});
 }
 
 void resetPlayers(string tname)
 {
-    for(auto it = liste_participants.begin(); it != liste_participants.end(); ++it)
+    for(auto it = participants_list.begin(); it != participants_list.end(); ++it)
     {
         deletePlayer(tname, (*it).first);
     }

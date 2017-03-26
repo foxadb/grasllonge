@@ -24,13 +24,11 @@ using namespace std;
 
 void initialize_param_values(string suser, string spass);
 
-void create_liste_participants(string tname);
+void create_participants_list(string tname);
 
 /**
  * @brief Get the tournament's infos
  *
- * @param user account's username
- * @param pass account's password
  * @param tname tournament's name (custom url)
  *
  * @return tournament's infos in JSON format
@@ -40,8 +38,6 @@ string getTournament(string tname);
 /**
  * @brief Change the tournament's name (not url)
  *
- * @param user account's username
- * @param pass account's password
  * @param tname tournament's name (custom url)
  * @param newName new tournament's name
  */
@@ -50,8 +46,6 @@ void changeTournamentName(string tname, string newName);
 /**
  * @brief Add a player into the tournament
  *
- * @param user account's username
- * @param pass account's password
  * @param tname tournament's name (custom url)
  * @param pname player's name to add
  */
@@ -60,15 +54,24 @@ void addPlayer(string tname, string pname);
 /**
  * @brief Add a list of players
  *
- * @param user account's username
- * @param pass account's password
  * @param tname tournament's name (custom url)
  * @param file file containing the players' list
  */
 void addPlayerList(string tname, vector<string> list);
 
+/**
+ * @brief Delete a player into the tournament
+ *
+ * @param tname tournament's name (custom url)
+ * @param pname player's name to delete
+ */
 void deletePlayer(string tname, string pname);
 
+/**
+ * @brief Reset the tournament's players list
+ *
+ * @param tname tournament's name (custom url)
+ */
 void resetPlayers(string tname);
 
 #endif /* CONNECTION_H */
