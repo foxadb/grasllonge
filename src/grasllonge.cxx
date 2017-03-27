@@ -34,11 +34,12 @@ int main(int argc, char* argv[])
 	//Configuration
 	const std::string login = "dothraki";
 	const std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
-	const std::string tournament = "gras8_test1";
+	const std::string tournament = "gras7_test1";
 	
-	initialize_param_values(login, apikey);
+	JSON::Object participants;
+	JSON::Array matches;
 
-	create_participants_list(tournament);
+	initialize_param_values(login, apikey);
 
     //Flush the history
     rl_clear_history();	
@@ -48,6 +49,8 @@ int main(int argc, char* argv[])
 
     while(1)
     {
+    	participants = create_participants(tournament);
+
     	rl_attempted_completion_function = function_name_completion;
 
         char* line;
@@ -64,12 +67,12 @@ int main(int argc, char* argv[])
         {
         	int testNum;
         	std::cout << "Enter the test number: ";
-        	cin >> testNum;
-        	grasllongeTest(testNum, tournament);
+        	std::cin >> testNum;
+        	grasllongeTest(testNum, tournament, participants);
         }
         //////////////// ENDING OF TEST LINES
 
-        else execute_function(line, tournament);
+        else matches = execute_function(line, tournament, participants, matches);
 
         add_history(line);
 

@@ -20,58 +20,72 @@
 #include "../libjson/json.hh"
 #include <vector>
 
-using namespace std;
+void initialize_param_values(std::string suser, std::string spass);
 
-void initialize_param_values(string suser, string spass);
+JSON::Object create_participants(std::string tName);
 
-void create_participants_list(string tname);
+void printParticipants(JSON::Object participants);
 
 /**
  * @brief Get the tournament's infos
  *
- * @param tname tournament's name (custom url)
+ * @param tName tournament's name (custom url)
  *
  * @return tournament's infos in JSON format
  */
-string getTournament(string tname);
+std::string getTournament(std::string tName);
 
 /**
  * @brief Change the tournament's name (not url)
  *
- * @param tname tournament's name (custom url)
+ * @param tName tournament's name (custom url)
  * @param newName new tournament's name
  */
-void changeTournamentName(string tname, string newName);
+void changeTournamentName(std::string tName, std::string newName);
 
 /**
  * @brief Add a player into the tournament
  *
- * @param tname tournament's name (custom url)
- * @param pname player's name to add
+ * @param tName tournament's name (custom url)
+ * @param pName player's name to add
  */
-void addPlayer(string tname, string pname);
+void addPlayer(std::string tName, std::string pName);
 
 /**
  * @brief Add a list of players
  *
- * @param tname tournament's name (custom url)
+ * @param tName tournament's name (custom url)
  * @param file file containing the players' list
  */
-void addPlayerList(string tname, vector<string> list);
+void addPlayerList(std::string tName, std::vector<std::string> list);
 
 /**
  * @brief Delete a player into the tournament
  *
- * @param tname tournament's name (custom url)
- * @param pname player's name to delete
+ * @param tName tournament's name (custom url)
+ * @param pName player's name to delete
  */
-void deletePlayer(string tname, string pname);
+void deletePlayer(std::string tName, std::string pName, JSON::Object participants);
 
 /**
  * @brief Reset the tournament's players list
  *
- * @param tname tournament's name (custom url)
+ * @param tName tournament's name (custom url)
  */
-void resetPlayers(string tname);
+void resetPlayers(std::string tName, JSON::Object participants);
+
+std::string player_id_to_name(int id, JSON::Object participants);
+
+int match_id_to_num(int id, JSON::Array matches);
+
+JSON::Array pullMatches(std::string tName);
+
+void searchMatch(JSON::Array matches, int player_id, JSON::Object participants);
+
+void displayMatch(JSON::Array matches, int matchNum, JSON::Object participants);
+
+void updateMatch(JSON::Array* matches, int matchNum, std::string score);
+
+void pushMatches(std::string tName, JSON::Array* matches);
 
 #endif /* CONNECTION_H */

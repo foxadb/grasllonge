@@ -7,7 +7,7 @@
 
 #include "test.h"
 
-void grasllongeTest(int num, string tournament)
+void grasllongeTest(int num, std::string tournament, JSON::Object participants)
 {
 	string newName;
 	string player;
@@ -47,14 +47,10 @@ void grasllongeTest(int num, string tournament)
 		break;
 
 	case 3:
-		create_participants_list(tournament);
-		break;
-
-	case 4:
 		cout << "Delete Camus" << endl;
-		deletePlayer(tournament, "Camus");
+		deletePlayer(tournament, "Camus", participants);
 		cout << "Reset the players' list" << endl;
-		resetPlayers(tournament);
+		resetPlayers(tournament, participants);
 		break;
 
 	default:

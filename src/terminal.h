@@ -10,10 +10,11 @@
 
 #include "connection.h"
 
-char** function_name_completion(const char*, int, int);
+char** function_name_completion(const char* text, int start, int end);
 
-char* function_name_generator(const char*, int);
+char* function_name_generator(const char* text, int state);
 
-void execute_function(const char*, const std::string);
+JSON::Array execute_function(const char* function_name, const std::string tournament,
+		JSON::Object participants, JSON::Array matches);
 
 #endif /* SRC_TERMINAL_H_ */

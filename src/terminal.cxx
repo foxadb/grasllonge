@@ -6,20 +6,27 @@
  */
 
 #include "terminal.h"
+#include "connection.h"
 
 #include <iostream>
 #include <cstdlib>
 #include <fstream>
 #include <readline/readline.h>
 
-char *function_names[] = {
+char* function_names[] = {
 		"exit",
 		"test",
 		"changeTournamentName",
+		"printParticipants",
 		"addPlayer",
 		"addPlayerList",
 		"deletePlayer",
 		"resetPlayers",
+		"pullMatches",
+		"displayMatch",
+		"searchMatch",
+		"updateMatch",
+		"pushMatches",
 		nullptr
 };
 
@@ -48,7 +55,8 @@ char* function_name_generator(const char* text, int state)
 	return nullptr;
 }
 
-void execute_function(const char* function_name, const std::string tournament)
+JSON::Array execute_function(const char* function_name, const std::string tournament,
+		JSON::Object participants, JSON::Array matches)
 {
 	if (!strncmp(function_name, "changeTournamentName", 20))
 	{
@@ -56,6 +64,11 @@ void execute_function(const char* function_name, const std::string tournament)
 		std::cout << "Enter the new tournament name: ";
 		std::cin >> newName;
 		changeTournamentName(tournament, newName);
+	}
+
+	else if (!strncmp(function_name, "printParticipants", 17))
+	{
+		printParticipants(participants);
 	}
 
 	else if (!strncmp(function_name, "addPlayerList", 13))
@@ -93,7 +106,7 @@ void execute_function(const char* function_name, const std::string tournament)
 		std::string pName;
 		std::cout << "Enter player name to delete: ";
 		std::cin >> pName;
-		deletePlayer(tournament, pName);
+		deletePlayer(tournament, pName, participants);
 	}
 
 	else if (!strncmp(function_name, "resetPlayers", 12))
@@ -103,13 +116,59 @@ void execute_function(const char* function_name, const std::string tournament)
 		std::cin >> answer;
 		if (answer == 'y') {
 			std::cout << "Reseting the player list..." << std::endl;
-			resetPlayers(tournament);
+			resetPlayers(tournament, participants);
 			std::cout << "...completed";
 		}
+	}
+
+	else if (!strncmp(function_name, "pullMatches", 11))
+	{
+		std::cout << "Pulling matches infos from Challonge" << std::endl;
+		matches = pullMatches(tournament);
+	}
+
+	else if (!strncmp(function_name, "searchMatch", 11))
+	{
+		std::string player_name;
+		std::cout << "Enter the player name: ";
+		std::cin >> player_name;
+
+		int player_id = participants[player_name].as_int();
+		searchMatch(matches, player_id, participants);
+	}
+
+	else if (!strncmp(function_name, "displayMatch", 12))
+	{
+		int matchNum;
+		std::cout << "Enter the match number: ";
+		std::cin >> matchNum;
+		displayMatch(matches, matchNum, participants);
+	}
+
+	else if (!strncmp(function_name, "updateMatch", 10))
+	{
+		int matchNum;
+		std::cout << "Enter the match number: ";
+		std::cin >> matchNum;
+		displayMatch(matches, matchNum, participants);
+
+		std::string score;
+		std::cout << "Enter the score: ";
+		std::cin >> score;
+		updateMatch(&matches, matchNum, score);
+	}
+
+	else if (!strncmp(function_name, "pushMatches", 11))
+	{
+		std::cout << "Pushing matches update to Challonge" << std::endl;
+		pushMatches(tournament, &matches);
 	}
 
 	else
 	{
 		std::cout << "Function name does not exit" << std::endl;
 	}
+
+	return matches;
+
 }

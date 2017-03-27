@@ -20,6 +20,6 @@
 
 using namespace std;
 
-void grasllongeTest(int num, string tournament);
+void grasllongeTest(int num, std::string tournament, JSON::Object participants);
 
 #endif /* SRC_TEST_H_ */
