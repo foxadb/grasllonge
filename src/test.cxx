@@ -9,12 +9,18 @@
 
 void grasllongeTest(int num, std::string tournament, JSON::Object participants)
 {
-	string newName;
-	string player;
+	std::string newName;
+	std::string player;
 
-	vector<string> list;
-	string line;
-	ifstream infile("../test/players_list.txt");
+	std::vector<std::string> list;
+	std::string line;
+	std::ifstream infile("../test/players_list.txt");
+
+	JSON::Array matches = pullMatches(tournament);
+	std::string url;
+	std::string score;
+	int winner_id;
+	cpr::Response res;
 
 	switch (num)
 	{
@@ -23,17 +29,17 @@ void grasllongeTest(int num, std::string tournament, JSON::Object participants)
 		changeTournamentName(tournament, newName);
 
 		player = "Matthieu";
-		cout << "Adding " + player << endl;
+		std::cout << "Adding " + player << std::endl;
 		addPlayer(tournament, player);
-		cout << getTournament(tournament) << endl;
+		std::cout << getTournament(tournament) << std::endl;
 		break;
 
 	case 2:
-		cout << "Changing tournament's name" << endl;
+		std::cout << "Changing tournament's name" << std::endl;
 		newName = "Nouveau Nom";
 		changeTournamentName(tournament, newName);
 
-		cout << "Reading players' list" << endl;
+		std::cout << "Reading players' list" << std::endl;
 		if (infile)
 		{
 			while (getline(infile, line))
@@ -41,19 +47,34 @@ void grasllongeTest(int num, std::string tournament, JSON::Object participants)
 				list.push_back(line);
 			}
 		}
-		cout << "Adding players..." << endl;
+		std::cout << "Adding players..." << std::endl;
 		addPlayerList(tournament, list);
-		cout << "...completed";
+		std::cout << "...completed";
 		break;
 
 	case 3:
-		cout << "Delete Camus" << endl;
+		std::cout << "Delete Camus" << std::endl;
 		deletePlayer(tournament, "Camus", participants);
-		cout << "Reset the players' list" << endl;
+		std::cout << "Reset the players' list" << std::endl;
 		resetPlayers(tournament, participants);
 		break;
 
+	case 4:
+		std::cout << "Submiting match result" << std::endl;
+		score = "1-2";
+		winner_id = 46015449;
+
+		url = challongeUrl + "/gras7_test1/matches/71652578.json";
+		res = cpr::Put(
+				cpr::Url{url},
+				cpr::Authentication{"dothraki", "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig"},
+				cpr::Payload{{"match[scores_csv]", score}}
+		);
+		std::cout << parse_string(res.text) << std::endl;
+
+		break;
+
 	default:
-		cout << "Test number does not exist" << endl;
+		std::cout << "Test number does not exist" << std::endl;
 	}
 }

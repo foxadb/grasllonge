@@ -20,6 +20,11 @@
 #include "../libjson/json.hh"
 #include <vector>
 
+static const std::string challongeUrl = "https://api.challonge.com/v1/tournaments";
+
+static std::string user;
+static std::string pass;
+
 void initialize_param_values(std::string suser, std::string spass);
 
 JSON::Object create_participants(std::string tName);

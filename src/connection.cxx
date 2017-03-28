@@ -14,11 +14,6 @@
 
 #include "connection.h"
 
-static const std::string challongeUrl = "https://api.challonge.com/v1/tournaments";
-
-static std::string user;
-static std::string pass;
-
 void initialize_param_values(std::string suser, std::string spass)
 {
 	user = suser;
@@ -231,14 +226,17 @@ void pushMatches(std::string tName, JSON::Array* matches)
 		if ((*it)["updated"])
 		{
 			std::string url = challongeUrl + "/" + tName + "/matches/"
-					+ std::string((*it)["id"]) + ".json";
-		    auto res = cpr::Put(
-		            cpr::Url{url},
-		            cpr::Authentication{user, pass},
-		            cpr::Payload{{"match[scores_csv]", (*it)["score"].as_string()},
-		            	{"match[winner_id]", (*it)["winner_id"].as_int()}}
-		            );
-		    (*it)["updated"] = false;
+					+ std::to_string((*it)["id"].as_int()) + ".json";
+
+			std::string score = (*it)["score"].as_string();
+
+			auto res = cpr::Put(
+					cpr::Url{url},
+					cpr::Authentication{user, pass},
+					cpr::Payload{{"match[scores_csv]", score}}
+			);
+
+			(*it)["updated"] = false;
 		}
 	}
 }
