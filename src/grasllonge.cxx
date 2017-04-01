@@ -29,23 +29,46 @@
 
 int main(int argc, char* argv[])
 {
-    const char *prompt = "grasllonge > ";
-
-	//Configuration
-	const std::string login = "dothraki";
-	const std::string apikey = "uMhQBV4EbwHMuIpbHO0sZ0POyXop7VUbbd7FiDig";
-	const std::string tournament = "gras7_test1";
-	
-	JSON::Object participants;
-	JSON::Array matches;
-
-	initialize_param_values(login, apikey);
-
     //Flush the history
-    rl_clear_history();	
+    rl_clear_history();
 
     //Initialize libcurl
     curl_global_init(CURL_GLOBAL_ALL);
+
+    const char *prompt = "grasllonge > ";
+
+	//Configuration
+	std::string login;
+	std::string api_key;
+	
+	// Read login
+	std::cout << "Reading login" << std::endl;
+	std::ifstream infile("../login.txt");
+	infile >> login >> api_key;
+	initialize_param_values(login, api_key);
+
+	// Tournament selection
+	tournamentSelect:
+
+	std::cout << "Print all tournaments infos ? (y/n): ";
+	char answer = 'n';
+	std::cin >> answer;
+	if (answer == 'y')
+	{
+		std::cout << "Reaching tournaments database" << std::endl << std::endl;
+		const JSON::Array tournamentsArr = pullTournaments();
+		printTournaments(tournamentsArr);
+	}
+
+	std::string tournament;
+	std::cout << "Enter the tournament's url: ";
+	std::cin >> tournament;
+
+	// Display tournament infos
+	displayTournament(getTournament(tournament));
+
+	JSON::Object participants;
+	JSON::Array matches;
 
     while(1)
     {
@@ -59,6 +82,13 @@ int main(int argc, char* argv[])
         if (line==0 || !strncmp(line, "exit", 4))
         {
             std::cout << "\nBye :)" << std::endl;
+            break;
+        }
+
+        else if (!strncmp(line, "quit", 4))
+        {
+            std::cout << "Disconnecting from " + tournament << std::endl;
+            goto tournamentSelect;
             break;
         }
 

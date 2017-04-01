@@ -15,13 +15,16 @@
 
 char* function_names[] = {
 		"exit",
+		"quit",
 		"test",
+		"displayTournament",
 		"changeTournamentName",
 		"printParticipants",
 		"addPlayer",
 		"addPlayerList",
 		"deletePlayer",
 		"resetPlayers",
+		"startTournament",
 		"pullMatches",
 		"displayMatch",
 		"searchMatch",
@@ -58,12 +61,24 @@ char* function_name_generator(const char* text, int state)
 JSON::Array execute_function(const char* function_name, const std::string tournament,
 		JSON::Object participants, JSON::Array matches)
 {
-	if (!strncmp(function_name, "changeTournamentName", 20))
+	if (!strncmp(function_name, "displayTournament", 17))
 	{
-		std::string newName;
-		std::cout << "Enter the new tournament name: ";
-		std::cin >> newName;
-		changeTournamentName(tournament, newName);
+		displayTournament(getTournament(tournament));
+	}
+
+	else if (!strncmp(function_name, "changeTournamentName", 20))
+	{
+		char answer = 'n';
+		std::cout << "Do you want to change the tournament's name ? (y/n): ";
+		std::cin >> answer;
+		if (answer == 'y')
+		{
+			std::string newName;
+			std::cout << "Enter the new tournament name: ";
+			std::cin >> newName;
+			std::cout << "The new name will be: " << newName << std::endl;
+			changeTournamentName(tournament, newName);
+		}
 	}
 
 	else if (!strncmp(function_name, "printParticipants", 17))
@@ -74,22 +89,19 @@ JSON::Array execute_function(const char* function_name, const std::string tourna
 	else if (!strncmp(function_name, "addPlayerList", 13))
 	{
 
-		char* pList;
+		std::string pList;
 		std::cout << "Enter players list name: ";
 		std::cin >> pList;
-		std::ifstream infile(pList);
 
+		std::ifstream infile(pList.c_str());
 		std::vector<std::string> pVect;
 		std::string line;
 
 		std::cout << "Reading players' list" << std::endl;
-		if (infile)
-		{
-			while (getline(infile, line))
-			{
+		while (infile >> line)
 				pVect.push_back(line);
-			}
-		}
+
+		std::cout << "Adding players to Challonge" << std::endl;
 		addPlayerList(tournament, pVect);
 	}
 
@@ -111,13 +123,25 @@ JSON::Array execute_function(const char* function_name, const std::string tourna
 
 	else if (!strncmp(function_name, "resetPlayers", 12))
 	{
-		char answer;
+		char answer = 'n';
 		std::cout << "Are you sure to reset the entire player list ? (y/n): ";
 		std::cin >> answer;
 		if (answer == 'y') {
 			std::cout << "Reseting the player list..." << std::endl;
 			resetPlayers(tournament, participants);
 			std::cout << "...completed";
+		}
+	}
+
+	else if (!strncmp(function_name, "startTournament", 14))
+	{
+		char answer = 'n';
+		std::cout << "Do you want to start " + tournament + " ? (y/n): ";
+		std::cin >> answer;
+		if (answer == 'y')
+		{
+			std::cout << "Starting " + tournament << std::endl;
+			startTournament(tournament);
 		}
 	}
 
