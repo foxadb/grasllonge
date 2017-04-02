@@ -72,7 +72,7 @@ JSON::Object create_participants(const std::string tName)
             cpr::Authentication{user, pass}
             );
 
-	JSON::Array temp = JSON::Array(parse_string(res.text));
+    JSON::Array temp = JSON::Array(parse_string(res.text));
 
 	for(auto it = temp.begin(); it != temp.end(); ++it)
 	{

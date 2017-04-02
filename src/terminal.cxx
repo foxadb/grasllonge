@@ -73,9 +73,11 @@ JSON::Array execute_function(const char* function_name, const std::string tourna
 		std::cin >> answer;
 		if (answer == 'y')
 		{
-			std::string newName;
 			std::cout << "Enter the new tournament name: ";
+
+			std::string newName;
 			std::cin >> newName;
+
 			std::cout << "The new name will be: " << newName << std::endl;
 			changeTournamentName(tournament, newName);
 		}
