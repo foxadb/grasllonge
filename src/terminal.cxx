@@ -29,7 +29,8 @@ char* function_names[] = {
 		"displayMatch",
 		"searchMatch",
 		"updateMatch",
-		"pushMatches",
+        "pushMatches",
+        "endTournament",
 		nullptr
 };
 
@@ -188,7 +189,19 @@ JSON::Array execute_function(const char* function_name, const std::string tourna
 	{
 		std::cout << "Pushing matches update to Challonge" << std::endl;
 		pushMatches(tournament, &matches);
-	}
+    }
+
+    else if (!strncmp(function_name, "endTournament", 12))
+    {
+        char answer = 'n';
+        std::cout << "Do you want to end " + tournament + " ? (y/n): ";
+        std::cin >> answer;
+        if (answer == 'y')
+        {
+            std::cout << "Ending " + tournament << std::endl;
+            endTournament(tournament);
+        }
+    }
 
 	else
 	{

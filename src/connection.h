@@ -132,6 +132,8 @@ void updateMatch(JSON::Array* matches, int matchNum, std::string score);
 
 void pushMatches(const std::string tName, JSON::Array* matches);
 
+void endTournament(const std::string tName);
+
 std::string player_id_to_name(int id, JSON::Object participants);
 
 int match_id_to_num(int id, JSON::Array matches);
