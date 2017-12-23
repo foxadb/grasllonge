@@ -1,3 +1,6 @@
+# Ignore login file
+login.txt
+
 # Build directory
 build
 
