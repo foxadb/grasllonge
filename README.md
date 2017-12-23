@@ -1,19 +1,13 @@
 # Grasllonge
 
-## Motivation
+## Description
 
-C++ application to improve user experience of TOs using Challonge bracket
+C++ coded application to improve user experience of tournament organisers using Challonge bracket
 system.
-
-## Language : C++
+This application provide a fast-paced terminal way to import a player list on Challonge, submit a match result and research the next matches to be played.
 
 ## Libraries
 [CPR](https://github.com/whoshuu/cpr) - C++ Requests: Curl for People, a spiritual port of Python Requests
-
-## Authors
-
-* Samy Amraoui
-* Matthieu Charly-Desroches
 
 ## Instructions
 
@@ -32,3 +26,8 @@ cmake ..
 make
 ./grasllonge
 ```
+
+## Authors
+
+* Samy Amraoui
+* Matthieu Charly-Desroches
