@@ -6,13 +6,18 @@ C++ coded application to improve user experience of tournament organisers using 
 system.
 This application provide a fast-paced terminal way to import a player list on Challonge, submit a match result and research the next matches to be played.
 
-## Libraries
+## Dependencies
+
 [CPR](https://github.com/whoshuu/cpr) - C++ Requests: Curl for People, a spiritual port of Python Requests
 
 ## Instructions
 
-Create a login.txt file with 2 lines:
+Initialize the submodules:
+```
+git submodule update --init --recursive
+```
 
+Create a login.txt file with 2 lines:
 ```
 login
 api key
@@ -26,8 +31,3 @@ cmake ..
 make
 ./grasllonge
 ```
-
-## Authors
-
-* Samy Amraoui
-* Matthieu Charly-Desroches
